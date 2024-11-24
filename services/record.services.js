@@ -3,6 +3,7 @@ const customerModel = require('../models/customers.models')
 const ListOfRecordsModel = require('../models/listOfRecords.models')
 const TimeIntervalsModel = require('../models/time_inrervals.models')
 const serviceModel = require('../models/services.models')
+const barberModel = require('../models/barber.models')
 const jwt = require('jsonwebtoken')
 
 class recordServices {
@@ -35,7 +36,7 @@ class recordServices {
             const email = jwt.verify(token, process.env.JWT)
             const userId = await customerModel.getCustomerIdEmail(email)
             const records = await recordModel.getRecordsByCustomer(userId.id)
-            const recordsWithTime = await Promise.all(
+            const fullRecords = await Promise.all(
                 records.map(async (record) => {
                     const time = await TimeIntervalsModel.getIntervalById(record.time_id)
                     const services = await ListOfRecordsModel.getServicesByCustomer(record.id)
@@ -47,10 +48,12 @@ class recordServices {
                     )
                     delete record.time_id
                     record.time = time.time_value
+                    record.barber = await barberModel.getBarberById(record.barber_id)
+                    delete record.barber_id
                     return record
                 })
             )
-            return recordsWithTime
+            return fullRecords
         } catch (e) {
             console.log(e)
         }
