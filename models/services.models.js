@@ -9,6 +9,15 @@ class Services {
             console.log(error)
         }
     }
+
+    async getServiceById(id) {
+        try {
+            const [service] = await pool.query(`SELECT * FROM services WHERE id = ${id}`)
+            return service[0]
+        } catch (error) {
+            console.log(error)
+        }
+    }
 }
 
 module.exports = new Services()

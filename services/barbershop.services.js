@@ -9,6 +9,15 @@ class BarbershopService {
             console.log(error)
         }
     }
+
+    async getBarbershopById(id) {
+        try {
+            const barbershop = await models.getBarbershop(id)
+            return barbershop
+        } catch (error) {
+            console.log(error)
+        }
+    }
 }
 
 module.exports = new BarbershopService()

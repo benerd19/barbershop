@@ -9,6 +9,15 @@ class Barber {
             console.log(error)
         }
     }
+
+    async getBarberById(id) {
+        try {
+            const [barber] = await pool.query(`select * from barbers where id = ${id}`)
+            return barber[0]
+        } catch (error) {
+            console.log(error)
+        }
+    }
 }
 
 module.exports = new Barber()

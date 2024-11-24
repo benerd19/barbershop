@@ -9,6 +9,24 @@ class RecordController {
             console.log(error)
         }
     }
+
+    async cancelRecord(req, res) {
+        try {
+            await recordServices.canselRecord(req.params.id)
+            res.sendStatus(200)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    async getAllRecords(req, res) {
+        try {
+            const records = await recordServices.getAllRecords(req.headers.authorization)
+            res.json(records)
+        } catch (error) {
+            console.log(error)
+        }
+    }
 }
 
 module.exports = new RecordController()

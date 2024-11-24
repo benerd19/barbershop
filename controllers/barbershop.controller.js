@@ -9,6 +9,15 @@ class BarbershopController {
             console.log(error)
         }
     }
+
+    async getBarbershopById(req, res) {
+        try {
+            const barbershop = await barbershopService.getBarbershopById(req.params.id)
+            res.json(barbershop)
+        } catch (error) {
+            console.log(error)
+        }
+    }
 }
 
 module.exports = new BarbershopController()

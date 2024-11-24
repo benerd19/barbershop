@@ -16,6 +16,23 @@ class Record {
             console.log(error)
         }
     }
+
+    async deleteRecord(id) {
+        try {
+            await pool.query(`delete from records where id = ${id}`)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    async getRecordsByCustomer(id) {
+        try {
+            const [records] = await pool.query(`select * from records where customer_id = ${id}`)
+            return records
+        } catch (error) {
+            console.log(error)
+        }
+    }
 }
 
 module.exports = new Record()

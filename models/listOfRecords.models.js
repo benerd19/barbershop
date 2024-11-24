@@ -8,6 +8,23 @@ class ListOfRecordsModel {
             console.log(error)
         }
     }
+
+    async deleteByRecordId(recordId) {
+        try {
+            await pool.query(`delete from list_of_works where record_id = ${recordId}`)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    async getServicesByCustomer(id) {
+        try {
+            const [services] = await pool.query(`select * from list_of_works where record_id = ${id}`)
+            return services
+        } catch (error) {
+            console.log(error)
+        }
+    }
 }
 
 module.exports = new ListOfRecordsModel()
