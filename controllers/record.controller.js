@@ -27,6 +27,15 @@ class RecordController {
             console.log(error)
         }
     }
+
+    async updateRecord(req, res) {
+        try {
+            const record = await recordServices.updateRecordById(req.params.id, req.body)
+            res.json(record)
+        } catch (error) {
+            console.log(error)
+        }
+    }
 }
 
 module.exports = new RecordController()

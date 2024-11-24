@@ -33,6 +33,21 @@ class Record {
             console.log(error)
         }
     }
+
+    async updateRecordById(id, data) {
+        try {
+            const { date, time, comment, barber } = data
+            const [record] = await pool.query(`update records set date = ?, time_id = ?, comment = ?, barber_id = ? where id = ${id}`, [
+                date,
+                time,
+                comment,
+                barber,
+            ])
+            return record
+        } catch (error) {
+            console.log(error)
+        }
+    }
 }
 
 module.exports = new Record()

@@ -58,6 +58,21 @@ class recordServices {
             console.log(e)
         }
     }
+
+    async updateRecordById(id, data) {
+        try {
+            await recordModel.updateRecordById(id, data)
+            await ListOfRecordsModel.deleteByRecordId(id)
+            const { services } = data
+            await Promise.all(
+                services.map(async (service) => {
+                    await ListOfRecordsModel.createRecord(id, service)
+                })
+            )
+        } catch (e) {
+            console.log(e)
+        }
+    }
 }
 
 module.exports = new recordServices()
