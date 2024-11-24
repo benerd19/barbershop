@@ -9,6 +9,21 @@ class Review {
             console.log(error)
         }
     }
+
+    async createReview(review) {
+        try {
+            const { rating, date, text, barber_id, customer } = review
+            await pool.query(`insert into reviews (rating, date, text, barber_id, customer_id) values (?, ?, ?, ?, ?)`, [
+                rating,
+                date,
+                text,
+                barber_id,
+                customer,
+            ])
+        } catch (error) {
+            console.log(error)
+        }
+    }
 }
 
 module.exports = new Review()
