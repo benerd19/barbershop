@@ -2,6 +2,12 @@ create database if not exists barbershop;
 
 use barbershop;
 
+create table if not exists time_intervals(
+    id int primary key auto_increment,
+    time_value varchar(255) not null
+);    
+
+
 create table if not exists ranks(
     id int primary key auto_increment,
     name varchar(255) not null
@@ -10,8 +16,8 @@ create table if not exists ranks(
 create table if not exists services(
     id int primary key auto_increment,
     name varchar(255) not null,
-    price int not null,
-    duration int not null,
+    price float not null,
+    duration float not null,
     description varchar(255) not null
 );
 
@@ -61,12 +67,13 @@ create table if not exists reviews(
 create table if not exists records(
     id int primary key auto_increment,
     date date not null,
-    time time not null,
+    time_id int not null,
     comment varchar(255) not null,
     customer_id int not null,
     barber_id int not null,
     foreign key (customer_id) references customers(id),
-    foreign key (barber_id) references barbers(id)
+    foreign key (barber_id) references barbers(id),
+    foreign key (time_id) references time_intervals(id)
 );
 
 create table if not exists list_of_works(
@@ -76,7 +83,3 @@ create table if not exists list_of_works(
     foreign key (record_id) references records(id),
     foreign key (service_id) references services(id)
 );
-
-
-
-

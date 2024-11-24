@@ -28,6 +28,16 @@ class CustomersService {
             console.log(e)
         }
     }
+
+    async getInfo(token) {
+        try {
+            const email = jwt.verify(token, process.env.JWT)
+            const user = await model.getCustomer(email)
+            return user
+        } catch (e) {
+            console.log(e)
+        }
+    }
 }
 
 module.exports = new CustomersService()

@@ -19,6 +19,16 @@ class CustomerController {
             console.log(error)
         }
     }
+
+    async getInfo(req, res) {
+        try {
+            const token = req.headers.authorization
+            const user = await services.getInfo(token)
+            res.json(user)
+        } catch (error) {
+            console.log(error)
+        }
+    }
 }
 
 module.exports = new CustomerController()

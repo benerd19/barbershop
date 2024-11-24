@@ -1,10 +1,10 @@
 const pool = require('../config/db.js')
 
 class CustomersModel {
-    async getCustomer(id) {
+    async getCustomer(email) {
         try {
-            const [customer] = await pool.query(`select * from customers where id = ${id}`)
-            return customer
+            const [customer] = await pool.query(`select first_name, second_name, surname, phone from customers where email = '${email}'`)
+            return customer[0]
         } catch (error) {
             console.log(error)
         }
