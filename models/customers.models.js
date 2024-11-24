@@ -30,6 +30,15 @@ class CustomersModel {
             console.log(error)
         }
     }
+
+    async getCustomerIdEmail(email) {
+        try {
+            const [customer] = await pool.query(`select id from customers where email = '${email}'`)
+            return customer[0]
+        } catch (e) {
+            console.log(e)
+        }
+    }
 }
 
 module.exports = new CustomersModel()
