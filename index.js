@@ -10,6 +10,7 @@ const services = require('./routes/service.routes')
 const record = require('./routes/record.routes')
 const review = require('./routes/review.routes')
 const time = require('./routes/time_intervals.routes')
+const images = require('./routes/images.routes')
 
 app.use(express.json())
 app.use(cors())
@@ -20,6 +21,7 @@ app.use('/services', services)
 app.use('/record', record)
 app.use('/review', review)
 app.use('/time', time)
+app.use('/images', images)
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`)
