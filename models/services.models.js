@@ -3,7 +3,7 @@ const pool = require('../config/db.js')
 class Services {
     async getAllServices() {
         try {
-            const services = await pool.query('SELECT * FROM services')
+            const services = await pool.query('select * from services')
             return services[0]
         } catch (error) {
             console.log(error)
@@ -12,7 +12,7 @@ class Services {
 
     async getServiceById(id) {
         try {
-            const [service] = await pool.query(`SELECT * FROM services WHERE id = ${id}`)
+            const [service] = await pool.query('select * from services where id = ?', [id])
             return service[0]
         } catch (error) {
             console.log(error)

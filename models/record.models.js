@@ -4,7 +4,7 @@ class Record {
     async createRecord(data) {
         try {
             const { date, time, comment, customer, barber } = data
-            const [record] = await pool.query(`INSERT INTO records (date, time_id, comment, customer_id, barber_id) VALUES (?, ?, ?, ?, ?)`, [
+            const [record] = await pool.query(`insert into records (date, time_id, comment, customer_id, barber_id) values (?, ?, ?, ?, ?)`, [
                 date,
                 time,
                 comment,
@@ -19,7 +19,7 @@ class Record {
 
     async deleteRecord(id) {
         try {
-            await pool.query(`delete from records where id = ${id}`)
+            await pool.query('delete from records where id = ?', [id])
         } catch (error) {
             console.log(error)
         }
@@ -27,7 +27,7 @@ class Record {
 
     async getRecordsByCustomer(id) {
         try {
-            const [records] = await pool.query(`select * from records where customer_id = ${id}`)
+            const [records] = await pool.query('select * from records where customer_id = ?', [id])
             return records
         } catch (error) {
             console.log(error)
@@ -37,11 +37,12 @@ class Record {
     async updateRecordById(id, data) {
         try {
             const { date, time, comment, barber } = data
-            const [record] = await pool.query(`update records set date = ?, time_id = ?, comment = ?, barber_id = ? where id = ${id}`, [
+            const [record] = await pool.query('update records set date = ?, time_id = ?, comment = ?, barber_id = ? where id = ?', [
                 date,
                 time,
                 comment,
                 barber,
+                id,
             ])
             return record
         } catch (error) {
