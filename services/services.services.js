@@ -6,7 +6,7 @@ class ServicesService {
             const services = await servicesModel.getAllServices()
             return services
         } catch (error) {
-            console.log(error)
+            throw error
         }
     }
 }

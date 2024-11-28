@@ -6,7 +6,7 @@ class BarbershopModel {
             const [barbershops] = await pool.query('select * from barbershops')
             return barbershops
         } catch (error) {
-            console.log(e)
+            throw error
         }
     }
 
@@ -15,7 +15,7 @@ class BarbershopModel {
             const [barbershop] = await pool.query('select * from barbershops where id = ?', [id])
             return barbershop[0]
         } catch (error) {
-            console.log(e)
+            throw error
         }
     }
 
@@ -31,7 +31,7 @@ class BarbershopModel {
             ])
             return newBarbershop
         } catch (error) {
-            console.log(error)
+            throw error
         }
     }
 }

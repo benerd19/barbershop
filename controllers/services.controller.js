@@ -1,12 +1,12 @@
 const servicesService = require('../services/services.services')
 
 class ServicesController {
-    async getAllServices(req, res) {
+    async getAllServices(req, res, next) {
         try {
             const services = await servicesService.getAllServices()
             res.json(services)
         } catch (error) {
-            console.log(error)
+            next(error)
         }
     }
 }

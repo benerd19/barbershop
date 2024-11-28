@@ -6,7 +6,7 @@ class CustomersModel {
             const [customer] = await pool.query('select first_name, second_name, surname, phone from customers where email = ?', [email])
             return customer[0]
         } catch (error) {
-            console.log(error)
+            throw error
         }
     }
 
@@ -19,7 +19,7 @@ class CustomersModel {
             )
             return newCustomer
         } catch (error) {
-            console.log(error)
+            throw error
         }
     }
 
@@ -28,7 +28,7 @@ class CustomersModel {
             const customer = await pool.query('select email, password from customers where email = ?', [email])
             return customer[0]
         } catch (error) {
-            console.log(error)
+            throw error
         }
     }
 
@@ -37,7 +37,7 @@ class CustomersModel {
             const [customer] = await pool.query('select id from customers where email = ?', [email])
             return customer[0]
         } catch (e) {
-            console.log(e)
+            throw error
         }
     }
 }

@@ -6,7 +6,7 @@ class Services {
             const services = await pool.query('select * from services')
             return services[0]
         } catch (error) {
-            console.log(error)
+            throw error
         }
     }
 
@@ -15,7 +15,7 @@ class Services {
             const [service] = await pool.query('select * from services where id = ?', [id])
             return service[0]
         } catch (error) {
-            console.log(error)
+            throw error
         }
     }
 }

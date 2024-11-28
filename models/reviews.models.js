@@ -6,7 +6,7 @@ class Review {
             const [review] = await pool.query('select * from reviews where barber_id = ?', [id])
             return review
         } catch (error) {
-            console.log(error)
+            throw error
         }
     }
 
@@ -21,7 +21,7 @@ class Review {
                 customer,
             ])
         } catch (error) {
-            console.log(error)
+            throw error
         }
     }
 }

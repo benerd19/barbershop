@@ -1,14 +1,16 @@
+const { BadRequestError } = require('../utils/customErrors')
 const reviewService = require('../services/review.services')
 
 class ReviewController {
-    async createReview(req, res) {
+    async createReview(req, res, next) {
         try {
             const review = req.body
             const token = req.headers.authorization
+            if (!token) throw new BadRequestError('Token is not provided')
             await reviewService.createReview(review, token)
             res.status(201).json({ message: 'Review created' })
         } catch (error) {
-            console.log(error)
+            next(error)
         }
     }
 }

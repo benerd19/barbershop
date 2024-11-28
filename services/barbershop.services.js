@@ -1,4 +1,5 @@
 const models = require('../models/barbershop.models')
+const { NotFoundError } = require('../utils/customErrors')
 
 class BarbershopService {
     async getBarbershops() {
@@ -6,16 +7,17 @@ class BarbershopService {
             const barbershops = await models.getBarbershops()
             return barbershops
         } catch (error) {
-            console.log(error)
+            throw error
         }
     }
 
     async getBarbershopById(id) {
         try {
             const barbershop = await models.getBarbershop(id)
+            if (!barbershop) throw new NotFoundError('Barbershop not found')
             return barbershop
         } catch (error) {
-            console.log(error)
+            throw error
         }
     }
 }

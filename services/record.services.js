@@ -1,3 +1,4 @@
+const { ForbiddenError, NotFoundError, BadRequestError } = require('../utils/customErrors')
 const recordModel = require('../models/record.models')
 const customerModel = require('../models/customers.models')
 const ListOfRecordsModel = require('../models/listOfRecords.models')
@@ -11,23 +12,28 @@ class recordServices {
         try {
             const email = jwt.verify(token, process.env.JWT)
             const userId = await customerModel.getCustomerIdEmail(email)
+            if (!userId) throw new NotFoundError('User not found')
             data.customer = userId.id
+            const { date, time, comment, barber, services } = data
+            if (!date || !time || !comment || !barber || !services) throw new BadRequestError('Invalid data')
             const record = await recordModel.createRecord(data)
             data.services.map(async (service) => {
                 await ListOfRecordsModel.createRecord(record.insertId, service)
             })
-            return record
-        } catch (e) {
-            console.log(e)
+            return { id: record.insertId }
+        } catch (error) {
+            if (error instanceof jwt.JsonWebTokenError) throw new ForbiddenError('Invalid token')
+            throw error
         }
     }
 
     async canselRecord(id) {
         try {
+            if (!Number.isInteger(Number(id))) throw new BadRequestError('Invalid data')
             await ListOfRecordsModel.deleteByRecordId(id)
             await recordModel.deleteRecord(id)
-        } catch (e) {
-            console.log(e)
+        } catch (error) {
+            throw error
         }
     }
 
@@ -35,6 +41,7 @@ class recordServices {
         try {
             const email = jwt.verify(token, process.env.JWT)
             const userId = await customerModel.getCustomerIdEmail(email)
+            if (!userId) throw new NotFoundError('User not found')
             const records = await recordModel.getRecordsByCustomer(userId.id)
             const fullRecords = await Promise.all(
                 records.map(async (record) => {
@@ -54,13 +61,16 @@ class recordServices {
                 })
             )
             return fullRecords
-        } catch (e) {
-            console.log(e)
+        } catch (error) {
+            if (error instanceof jwt.JsonWebTokenError) throw new ForbiddenError('Invalid token')
+            throw error
         }
     }
 
     async updateRecordById(id, data) {
         try {
+            if (!data) throw new BadRequestError('Invalid data')
+            if (!Number.isInteger(Number(id))) throw new BadRequestError('Invalid data')
             await recordModel.updateRecordById(id, data)
             await ListOfRecordsModel.deleteByRecordId(id)
             const { services } = data
@@ -70,7 +80,7 @@ class recordServices {
                 })
             )
         } catch (e) {
-            console.log(e)
+            throw error
         }
     }
 }

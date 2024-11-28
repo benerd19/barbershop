@@ -5,8 +5,8 @@ class TimeIntervalsService {
         try {
             const intervals = await TimeIntervalsModel.getAllIntervals()
             return intervals
-        } catch (e) {
-            console.log(e)
+        } catch (error) {
+            throw error
         }
     }
 }

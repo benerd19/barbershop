@@ -13,7 +13,7 @@ class Record {
             ])
             return record
         } catch (error) {
-            console.log(error)
+            throw error
         }
     }
 
@@ -21,7 +21,7 @@ class Record {
         try {
             await pool.query('delete from records where id = ?', [id])
         } catch (error) {
-            console.log(error)
+            throw error
         }
     }
 
@@ -30,7 +30,7 @@ class Record {
             const [records] = await pool.query('select * from records where customer_id = ?', [id])
             return records
         } catch (error) {
-            console.log(error)
+            throw error
         }
     }
 
@@ -46,7 +46,7 @@ class Record {
             ])
             return record
         } catch (error) {
-            console.log(error)
+            throw error
         }
     }
 }

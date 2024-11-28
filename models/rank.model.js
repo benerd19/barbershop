@@ -6,7 +6,7 @@ class Rank {
             const [rank] = await pool.query('select * from ranks where id = ?', [id])
             return rank[0]
         } catch (error) {
-            console.log(error)
+            throw error
         }
     }
 }

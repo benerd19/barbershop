@@ -5,7 +5,7 @@ class ListOfRecordsModel {
         try {
             await pool.query('insert into list_of_works (record_id, service_id) values (?, ?)', [recordId, serviceId])
         } catch (error) {
-            console.log(error)
+            throw error
         }
     }
 
@@ -13,7 +13,7 @@ class ListOfRecordsModel {
         try {
             await pool.query('delete from list_of_works where record_id = ?', [recordId])
         } catch (error) {
-            console.log(error)
+            throw error
         }
     }
 
@@ -22,7 +22,7 @@ class ListOfRecordsModel {
             const [services] = await pool.query('select * from list_of_works where record_id = ?', [id])
             return services
         } catch (error) {
-            console.log(error)
+            throw error
         }
     }
 }
