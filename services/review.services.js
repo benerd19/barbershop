@@ -2,6 +2,7 @@ const { BadRequestError, NotFoundError } = require('../utils/customErrors')
 const reviewModel = require('../models/reviews.models.js')
 const jwt = require('jsonwebtoken')
 const customerModel = require('../models/customers.models.js')
+const barberModels = require('../models/barber.models.js')
 
 class ReviewService {
     async createReview(review, token) {
@@ -19,6 +20,8 @@ class ReviewService {
 
     async getReviewByBarber(id) {
         try {
+            const barber = await barberModels.getBarberById(id)
+            if (!barber) throw new NotFoundError('Barber not found')
             const review = await reviewModel.getReviewByBarber(id)
             if (review.length === 0) throw new NotFoundError('Review not found')
             return review
