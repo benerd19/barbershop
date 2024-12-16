@@ -16,6 +16,16 @@ class ReviewService {
             throw error
         }
     }
+
+    async getReviewByBarber(id) {
+        try {
+            const review = await reviewModel.getReviewByBarber(id)
+            if (review.length === 0) throw new NotFoundError('Review not found')
+            return review
+        } catch (error) {
+            throw error
+        }
+    }
 }
 
 module.exports = new ReviewService()

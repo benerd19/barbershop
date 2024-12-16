@@ -13,6 +13,16 @@ class ReviewController {
             next(error)
         }
     }
+
+    async getReviewByBarber(req, res, next) {
+        try {
+            const id = req.params.id
+            const review = await reviewService.getReviewByBarber(id)
+            res.json(review)
+        } catch (error) {
+            next(error)
+        }
+    }
 }
 
 module.exports = new ReviewController()
