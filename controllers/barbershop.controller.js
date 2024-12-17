@@ -13,7 +13,8 @@ class BarbershopController {
 
     async getBarbershopById(req, res, next) {
         try {
-            if (!Number.isInteger(req.params.id)) throw new BadRequestError('Invalid data')
+            console.log(typeof req.params.id)
+            if (!Number.isInteger(Number(req.params.id))) throw new BadRequestError('Invalid data')
             const barbershop = await barbershopService.getBarbershopById(req.params.id)
             res.json(barbershop)
         } catch (error) {
